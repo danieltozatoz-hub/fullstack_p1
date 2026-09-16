@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Empréstimos</h1>
+<a href="/emprestimos/novo/" class="btn btn-primary mb-3">Novo Empréstimo</a>
+<table class="table">
+    <thead><tr><th>Usuário</th><th>Exemplar</th><th>Prevista</th><th>Devolvido em</th><th>Status</th><th>Ações</th></tr></thead>
+    <tbody>
+        {% for emp in emprestimos %}
+        <tr class="{% if emp.atrasado %}table-danger{% endif %}">
+            <td>{{ emp.usuario.nome }}</td>
+            <td>{{ emp.exemplar }}</td>
+            <td>{{ emp.data_prevista_devolucao }}</td>
+            <td>{{ emp.data_devolucao|default:"—" }}</td>
+            <td>
+                {% if emp.atrasado %}
+                    Atrasado (multa: R$ {{ emp.valor_multa }})
+                {% elif emp.data_devolucao %}
+                    Devolvido
+                {% else %}
+                    Em dia
+                {% endif %}
+            </td>
+            <td>
+                {% if not emp.data_devolucao %}
+                <a href="/emprestimos/{{ emp.pk }}/devolver/" class="btn btn-sm btn-success">Devolver</a>
+                {% endif %}
+                <a href="/emprestimos/{{ emp.pk }}/excluir/" class="btn btn-sm btn-danger">Excluir</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">Nenhum empréstimo registrado.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

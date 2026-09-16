@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Confirmar devolução</h1>
+<p>Confirmar devolução de <strong>{{ emprestimo.exemplar }}</strong> por {{ emprestimo.usuario.nome }}?</p>
+{% if emprestimo.atrasado %}
+<p class="text-danger">Atenção: devolução em atraso. Multa: R$ {{ emprestimo.valor_multa }}</p>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">Confirmar devolução</button>
+    <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

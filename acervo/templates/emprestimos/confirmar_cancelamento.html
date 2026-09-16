@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Cancelar reserva</h1>
+<p>Cancelar a reserva de <strong>{{ reserva.usuario.nome }}</strong> para <strong>{{ reserva.livro.titulo }}</strong>?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirmar cancelamento</button>
+    <a href="javascript:history.back()" class="btn btn-secondary">Voltar</a>
+</form>
+{% endblock %}

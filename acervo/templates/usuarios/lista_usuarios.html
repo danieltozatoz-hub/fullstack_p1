@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Usuários</h1>
+<a href="/usuarios/novo/" class="btn btn-primary mb-3">Novo Usuário</a>
+<table class="table">
+    <thead><tr><th>Nome</th><th>Email</th><th>Telefone</th><th>Ações</th></tr></thead>
+    <tbody>
+        {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario.nome }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.telefone }}</td>
+            <td>
+                <a href="/usuarios/{{ usuario.pk }}/editar/" class="btn btn-sm btn-warning">Editar</a>
+                <a href="/usuarios/{{ usuario.pk }}/excluir/" class="btn btn-sm btn-danger">Excluir</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">Nenhum usuário cadastrado.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

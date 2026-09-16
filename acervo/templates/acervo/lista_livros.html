@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Livros</h1>
+<a href="/livros/novo/" class="btn btn-primary mb-3">Novo Livro</a>
+<table class="table">
+    <thead><tr><th>Título</th><th>Autor</th><th>Ano</th><th>Ações</th></tr></thead>
+    <tbody>
+        {% for livro in livros %}
+        <tr>
+            <td>{{ livro.titulo }}</td>
+            <td>{{ livro.autor }}</td>
+            <td>{{ livro.ano }}</td>
+            <td>
+                <a href="/livros/{{ livro.pk }}/editar/" class="btn btn-sm btn-warning">Editar</a>
+                <a href="/livros/{{ livro.pk }}/excluir/" class="btn btn-sm btn-danger">Excluir</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">Nenhum livro cadastrado.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Reservas (fila)</h1>
+<a href="/reservas/nova/" class="btn btn-primary mb-3">Nova Reserva</a>
+<table class="table">
+    <thead><tr><th>Posição</th><th>Usuário</th><th>Livro</th><th>Data</th><th>Ações</th></tr></thead>
+    <tbody>
+        {% for reserva in reservas %}
+        <tr>
+            <td>{{ forloop.counter }}º</td>
+            <td>{{ reserva.usuario.nome }}</td>
+            <td>{{ reserva.livro.titulo }}</td>
+            <td>{{ reserva.data_reserva }}</td>
+            <td>
+                <a href="/reservas/{{ reserva.pk }}/cancelar/" class="btn btn-sm btn-danger">Cancelar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">Nenhuma reserva ativa.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

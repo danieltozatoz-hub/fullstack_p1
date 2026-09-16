@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Exemplares</h1>
+<a href="/exemplares/novo/" class="btn btn-primary mb-3">Novo Exemplar</a>
+<table class="table">
+    <thead><tr><th>Livro</th><th>Código</th><th>Disponível</th><th>Ações</th></tr></thead>
+    <tbody>
+        {% for exemplar in exemplares %}
+        <tr>
+            <td>{{ exemplar.livro.titulo }}</td>
+            <td>{{ exemplar.codigo_patrimonio }}</td>
+            <td>{% if exemplar.disponivel %}Sim{% else %}Não{% endif %}</td>
+            <td>
+                <a href="/exemplares/{{ exemplar.pk }}/editar/" class="btn btn-sm btn-warning">Editar</a>
+                <a href="/exemplares/{{ exemplar.pk }}/excluir/" class="btn btn-sm btn-danger">Excluir</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">Nenhum exemplar cadastrado.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
