@@ -4,7 +4,22 @@ from .forms import LivroForm, AutorForm, ExemplarForm
 
 def lista_livros(request):
     livros = Livro.objects.all()
-    return render(request, 'acervo/lista_livros.html', {'livros': livros})
+
+    termo = request.GET.get('q', '')
+    if termo:
+        livros = livros.filter(titulo__icontains=termo)
+
+    status = request.GET.get('status', '')
+    if status == 'disponivel':
+        livros = livros.filter(exemplar__disponivel=True).distinct()
+    elif status == 'indisponivel':
+        livros = livros.exclude(exemplar__disponivel=True).distinct()
+
+    return render(request, 'acervo/lista_livros.html', {
+        'livros': livros,
+        'termo': termo,
+        'status': status,
+    })
 
 def novo_livro(request):
     if request.method == 'POST':
