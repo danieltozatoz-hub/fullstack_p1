@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Livros</h1>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input type="text" name="q" value="{{ termo }}" placeholder="Buscar por título" class="form-control">
+    </div>
+    <div class="col-auto">
+        <select name="status" class="form-select">
+            <option value="">Todos</option>
+            <option value="disponivel" {% if status == 'disponivel' %}selected{% endif %}>Disponível</option>
+            <option value="indisponivel" {% if status == 'indisponivel' %}selected{% endif %}>Indisponível</option>
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-primary">Filtrar</button>
+    </div>
+</form>
+
+<a href="/livros/novo/" class="btn btn-primary mb-3">Novo Livro</a>
+<table class="table">
+    <thead><tr><th>Título</th><th>Autor</th><th>Ano</th><th>Ações</th></tr></thead>
+    <tbody>
+        {% for livro in livros %}
+        <tr>
+            <td>{{ livro.titulo }}</td>
+            <td>{{ livro.autor }}</td>
+            <td>{{ livro.ano }}</td>
+            <td>
+                <a href="/livros/{{ livro.pk }}/editar/" class="btn btn-sm btn-warning">Editar</a>
+                <a href="/livros/{{ livro.pk }}/excluir/" class="btn btn-sm btn-danger">Excluir</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">Nenhum livro cadastrado.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
