@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Biblioteca</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/dashboard/">Biblioteca</a>
+            {% if user.is_authenticated %}
+            <div class="navbar-nav me-auto">
+                <a class="nav-link" href="/dashboard/">Dashboard</a>
+                <a class="nav-link" href="/livros/">Livros</a>
+                <a class="nav-link" href="/autores/">Autores</a>
+                <a class="nav-link" href="/exemplares/">Exemplares</a>
+                <a class="nav-link" href="/usuarios/">Usuários</a>
+                <a class="nav-link" href="/emprestimos/">Empréstimos</a>
+                <a class="nav-link" href="/reservas/">Reservas</a>
+            </div>
+            <div class="d-flex align-items-center gap-2 text-light small">
+                {% if perfil %}
+                <span>{{ perfil.organizacao.nome }} · {{ user.username }} ({{ perfil.get_papel_display }})</span>
+                {% else %}
+                <span>{{ user.username }}</span>
+                {% endif %}
+                <form method="post" action="{% url 'logout' %}" class="m-0">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-light">Sair</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="container pb-5">
+        {% block content %}{% endblock %}
+    </div>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

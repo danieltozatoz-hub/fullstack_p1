@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="h3">Acesso negado</h1>
+<p class="text-danger">{{ exception|default:"Você não tem permissão para acessar esta página." }}</p>
+<a href="/dashboard/" class="btn btn-secondary">Voltar</a>
+{% endblock %}
