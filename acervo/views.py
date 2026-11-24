@@ -1,9 +1,7 @@
 import csv
-
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-
 from core.tenant import org_atual, obter_perfil, papel_requerido
 from . import dashboard as metricas_dashboard
 from .models import Livro, Autor, Exemplar
@@ -13,28 +11,8 @@ from .forms import LivroForm, AutorForm, ExemplarForm, PeriodoForm
 # ---------------------------------------------------------------- Livros
 @login_required
 def lista_livros(request):
-<<<<<<< HEAD
     org = org_atual(request)
     livros = Livro.objects.filter(organizacao=org).select_related('autor')
-=======
-    livros = Livro.objects.all()
-
-    termo = request.GET.get('q', '')
-    if termo:
-        livros = livros.filter(titulo__icontains=termo)
-
-    status = request.GET.get('status', '')
-    if status == 'disponivel':
-        livros = livros.filter(exemplar__disponivel=True).distinct()
-    elif status == 'indisponivel':
-        livros = livros.exclude(exemplar__disponivel=True).distinct()
-
-    return render(request, 'acervo/lista_livros.html', {
-        'livros': livros,
-        'termo': termo,
-        'status': status,
-    })
->>>>>>> 30da19d2bc8a0a562a7a78d2681f04e392423f67
 
     termo = request.GET.get('q', '')
     if termo:
@@ -181,8 +159,6 @@ def excluir_exemplar(request, pk):
         exemplar.delete()
         return redirect('lista_exemplares')
     return render(request, 'acervo/confirmar_exclusao.html', {'objeto': exemplar})
-<<<<<<< HEAD
-
 
 # ------------------------------------------------------------- Dashboard
 @login_required
@@ -240,5 +216,3 @@ def exportar_csv(request):
             e.exemplar.livro.titulo, e.usuario.nome, e.data_emprestimo,
             e.data_prevista_devolucao, e.data_devolucao or '', situacao)])
     return resp
-=======
->>>>>>> 30da19d2bc8a0a562a7a78d2681f04e392423f67
