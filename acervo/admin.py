@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Autor, Livro, Exemplar
-
+#
 
 @admin.register(Autor)
 class AutorAdmin(admin.ModelAdmin):
